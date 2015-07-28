@@ -8,5 +8,6 @@
 #include "keyring.h"
 #include "options.h"
 #include "password.h"
+#include "commands.h"
 
 #endif

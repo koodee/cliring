@@ -19,7 +19,7 @@ int keyring_create(char *keyring, char *password)
 
 int keyrings_list()
 {
-  GList *keyrings = malloc(sizeof(GList));
+  GList *keyrings;
 
   GnomeKeyringResult res = gnome_keyring_list_keyring_names_sync(&keyrings);
   if (res != GNOME_KEYRING_RESULT_OK)

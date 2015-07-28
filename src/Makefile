@@ -1,5 +1,5 @@
 CC = clang
-OBJ = keyring.o password.o main.o
+OBJ = keyring.o password.o options.o main.o commands.o
 OUT = cliring
 LFLAGS = $(shell pkg-config --libs gnome-keyring-1)
 CFLAGS = $(shell pkg-config --cflags gnome-keyring-1) -g

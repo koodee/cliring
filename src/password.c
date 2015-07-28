@@ -21,8 +21,7 @@ int read_password(char **password)
 
     printf("Keyring password: ");
     fgets(*password, PASSWORD_MAX_SIZE, stdin);
-    password[strlen(*password) - 1] = 0;
-    printf("you typed '%s'\n", *password);
+    (*password)[strlen(*password) - 1] = 0;
 
     /* restore terminal */
     if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0) {
