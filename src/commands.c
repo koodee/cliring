@@ -53,24 +53,3 @@ int execute_store(const s_option *opt)
   free(password);
   return 0;
 }
-
-int execute_command(const char *command, const s_option *opt)
-{
-  if (!strcmp(command, "list"))
-  {
-    return execute_list(opt);
-  }
-  else if (!strcmp(command, "create"))
-  {
-    return execute_create(opt);
-  }
-  else if (!strcmp(command, "store"))
-  {
-    return execute_store(opt);
-  }
-  else
-  {
-    fprintf(stderr, "Unknown command: %s\n", command);
-    return -1;
-  }
-}

@@ -7,7 +7,8 @@
 #include "password.h"
 #include "keyring.h"
 
-// Executes a command based on its name and an options structure
-int execute_command(const char *command, const s_option *opt);
+int execute_create(const s_option *opt);
+int execute_list(const s_option *opt);
+int execute_store(const s_option *opt);
 
 #endif

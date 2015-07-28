@@ -1,5 +1,32 @@
 #include "main.h"
 
+void help()
+{
+  fprintf(stderr, "TODO\n");
+}
+
+int execute_command(const char *command, const s_option *opt)
+{
+  if (!strcmp(command, "list"))
+  {
+    return execute_list(opt);
+  }
+  else if (!strcmp(command, "create"))
+  {
+    return execute_create(opt);
+  }
+  else if (!strcmp(command, "store"))
+  {
+    return execute_store(opt);
+  }
+  else
+  {
+    fprintf(stderr, "Unknown command: %s\n", command);
+    help();
+    return -1;
+  }
+}
+
 int main(int argc, char* const argv[])
 {
   int index;
@@ -21,19 +48,21 @@ int main(int argc, char* const argv[])
         opt->password = optarg;
         break;
       default:
-        result = 1;
+        help();
+        free(opt);
+        return 1;
     }
 
-    if (result == 0 && argc == optind)
+    if (argc == optind)
     {
       fprintf(stderr, "No command found.\n");
-      // Call help function
+      help();
       result = 1;
     }
     else if (argc - optind > 1)
     {
       fprintf(stderr, "Please provide only one command.\n");
-      // Call help function
+      help();
       result =  1;
     }
     else
