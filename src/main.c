@@ -27,6 +27,26 @@ int execute_command(const char *command, const s_option *opt)
   }
 }
 
+int get_attribute(const char *optarg, const s_option *opt)
+{
+  int size = strlen(optarg);
+  char *arg = malloc(sizeof(char) * size + 1);
+  strncpy(arg, optarg, size);
+
+  char *attr_name = strtok(arg, ":");
+  char *attr_value = strtok(NULL, "");
+
+  if (attr_value == NULL)
+  {
+    free(arg);
+    return 1;
+  }
+
+  //TODO store the values in the opt struct
+  free(arg);
+  return 0;
+}
+
 int main(int argc, char* const argv[])
 {
   int index;
@@ -35,9 +55,12 @@ int main(int argc, char* const argv[])
   s_option *opt = malloc(sizeof(s_option));
   init_options(opt);
 
-  while ((c = getopt(argc, argv, "k:p:n:")) != -1)
+  while ((c = getopt(argc, argv, "a:k:p:n:")) != -1)
     switch (c)
     {
+      case 'a':
+        if (get_attribute(optarg, opt))
+          fprintf(stderr, "Malformated attribute: %s\n", optarg);
       case 'k':
         opt->keyring = optarg;
         break;
