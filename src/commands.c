@@ -49,7 +49,7 @@ int execute_store(const s_option *opt)
   else
     read_password(&password);
 
-  //return password_store(opt->keyring, password, opt->display_name);
+  int result =  password_store(opt->keyring, password, opt->display_name);
   free(password);
-  return 0;
+  return result;
 }

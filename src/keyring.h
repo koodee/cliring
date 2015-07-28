@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
+#include "tools.h"
 
 // Creates a new keyring from a name and a password.
 int keyring_create(char *keyring, char *password);
