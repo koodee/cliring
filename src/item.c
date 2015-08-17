@@ -1,8 +1,7 @@
 #include "item.h"
 
-int password_store(const char *keyring, const char *password, const char *display_name)
+int password_store(const char *keyring, const char *password, const char *display_name, GnomeKeyringAttributeList *attributes)
 {
-  GnomeKeyringAttributeList *attributes = gnome_keyring_attribute_list_new();
   guint32 item_id;
 
   GnomeKeyringResult res = gnome_keyring_item_create_sync(keyring,
