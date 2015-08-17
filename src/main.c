@@ -31,7 +31,7 @@ int get_attribute(const char *optarg, const s_option *opt)
 {
   int size = strlen(optarg);
   char *arg = malloc(sizeof(char) * size + 1);
-  strncpy(arg, optarg, size);
+  strncpy(arg, optarg, size + 1);
 
   char *attr_name = strtok(arg, ":");
   char *attr_value = strtok(NULL, "");
@@ -43,6 +43,7 @@ int get_attribute(const char *optarg, const s_option *opt)
   }
 
   //TODO store the values in the opt struct
+  gnome_keyring_attribute_list_append_string(opt->attributes, attr_name, attr_value);
   free(arg);
   return 0;
 }
@@ -61,6 +62,7 @@ int main(int argc, char* const argv[])
       case 'a':
         if (get_attribute(optarg, opt))
           fprintf(stderr, "Malformated attribute: %s\n", optarg);
+          break;
       case 'k':
         opt->keyring = optarg;
         break;
@@ -91,6 +93,7 @@ int main(int argc, char* const argv[])
     else
       result = execute_command(argv[optind], opt);
 
+    gnome_keyring_attribute_list_free(opt->attributes);
     free(opt);
     return result;
 }

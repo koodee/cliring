@@ -50,6 +50,7 @@ int execute_store(const s_option *opt)
     read_password(&password);
 
   int result =  password_store(opt->keyring, password, opt->display_name);
+
   free(password);
   return result;
 }
