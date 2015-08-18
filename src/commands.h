@@ -1,8 +1,6 @@
 #ifndef COMMANDS
 #define COMMANDS
 
-//#include <stdio.h>
-//#include <string.h>
 #include "options.h"
 #include "password.h"
 #include "keyring.h"
