@@ -60,7 +60,15 @@ int main(int argc, char* const argv[])
   s_option *opt = malloc(sizeof(s_option));
   init_options(opt);
 
-  while ((c = getopt(argc, argv, "a:k:p:n:")) != -1)
+  static struct option long_options[] = {
+        {"attributes",  required_argument, 0, 'a' },
+        {"keyring",     required_argument, 0, 'k' },
+        {"password",    required_argument, 0, 'p' },
+        {"name",        required_argument, 0, 'n' },
+        {0,             0,                 0,  0   }
+    };
+
+  while ((c = getopt_long(argc, argv, "a:k:p:n:", long_options, NULL)) != -1)
     switch (c)
     {
       case 'a':
