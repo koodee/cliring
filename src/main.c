@@ -19,6 +19,10 @@ int execute_command(const char *command, const s_option *opt)
   {
     return execute_store(opt);
   }
+  else if (!strcmp(command, "get"))
+  {
+    return execute_get(opt);
+  }
   else
   {
     fprintf(stderr, "Unknown command: %s\n", command);
@@ -27,7 +31,7 @@ int execute_command(const char *command, const s_option *opt)
   }
 }
 
-int get_attribute(const char *optarg, const s_option *opt)
+int get_attribute(const char *optarg, s_option *opt)
 {
   int size = strlen(optarg);
   char *arg = malloc(sizeof(char) * size + 1);
@@ -42,7 +46,7 @@ int get_attribute(const char *optarg, const s_option *opt)
     return 1;
   }
 
-  //TODO store the values in the opt struct
+  opt->attributes_count++;
   gnome_keyring_attribute_list_append_string(opt->attributes, attr_name, attr_value);
   free(arg);
   return 0;

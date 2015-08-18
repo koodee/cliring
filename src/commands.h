@@ -11,5 +11,6 @@
 int execute_create(const s_option *opt);
 int execute_list(const s_option *opt);
 int execute_store(const s_option *opt);
+int execute_get(const s_option *opt);
 
 #endif

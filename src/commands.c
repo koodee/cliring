@@ -1,5 +1,21 @@
 #include "commands.h"
 
+int execute_get(const s_option *opt)
+{
+  if (!opt->keyring)
+  {
+    fprintf(stderr, "Please provide a keyring.\n");
+    return 1;
+  }
+  else if (!opt->attributes_count)
+  {
+    fprintf(stderr, "Please provide attributes to search for.\n");
+    return 1;
+  }
+
+  return search(opt->keyring, opt->attributes);
+}
+
 int execute_create(const s_option *opt)
 {
   if (!opt->keyring)

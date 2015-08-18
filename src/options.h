@@ -9,6 +9,7 @@ struct cliring_option
   char *password;
   char *display_name;
   GnomeKeyringAttributeList *attributes;
+  int attributes_count;
 };
 typedef struct cliring_option s_option;
 
