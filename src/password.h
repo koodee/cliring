@@ -2,7 +2,6 @@
 #define PASSWORD
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <termios.h>
 #include <string.h>
 

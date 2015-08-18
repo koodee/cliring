@@ -1,8 +1,6 @@
 #ifndef ITEM
 #define ITEM
 
-#include <gnome-keyring-1/gnome-keyring.h>
-#include <glib.h>
 #include <stdlib.h>
 #include <string.h>
 #include "tools.h"

@@ -1,11 +1,6 @@
 #ifndef KEYRING
 #define KEYRING
 
-#include <gnome-keyring-1/gnome-keyring.h>
-#include <glib.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <malloc.h>
 #include "tools.h"
 
 // Creates a new keyring from a name and a password.

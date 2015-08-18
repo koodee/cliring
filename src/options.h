@@ -1,7 +1,7 @@
 #ifndef OPTIONS
 #define OPTIONS
-#include <stdlib.h>
-#include "keyring.h"
+
+#include <gnome-keyring-1/gnome-keyring.h>
 
 struct cliring_option
 {
