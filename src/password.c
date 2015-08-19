@@ -31,3 +31,40 @@ int read_password(char **password)
 
     return 0;
 }
+
+char *try_secure_dup(char *string)
+{
+  char *dup_string = NULL;
+
+  dup_string  = gnome_keyring_memory_strdup(string);
+
+  // No secure paging available, we do a strdup
+  if (!dup_string)
+    dup_string = (char *) strdup(string);
+
+
+  return dup_string;
+}
+
+char *try_secure_alloc(int size)
+{
+  if (size <= 0)
+    return NULL;
+
+  char *res = NULL;
+
+  res = (char *) gnome_keyring_memory_try_alloc(size);
+
+  if (!res)
+    res = malloc(size);
+
+  return res;
+}
+
+void free_password(char *password)
+{
+  if (gnome_keyring_memory_is_secure(password))
+    gnome_keyring_memory_free(password);
+  else
+    free(password);
+}

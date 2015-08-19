@@ -15,6 +15,7 @@ void init_options(s_option *options)
 void free_options(s_option *options)
 {
   free(options->keyring);
+  free_password(options->password);
   gnome_keyring_attribute_list_free(options->attributes);
   free(options);
 }

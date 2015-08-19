@@ -1,6 +1,7 @@
 #ifndef KEYRING
 #define KEYRING
 
+#include <string.h>
 #include "tools.h"
 
 /*

@@ -110,7 +110,7 @@ int main(int argc, char* const argv[])
         opt->display_name = optarg;
         break;
       case 'p':
-        opt->password = optarg;
+        opt->password = try_secure_dup(optarg);
         break;
       default:
         help();

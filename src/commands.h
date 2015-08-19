@@ -19,7 +19,7 @@ int execute_list(const s_option *opt);
 /*
   Checks that options are correctly set and launches the store password function.
 */
-int execute_store(const s_option *opt);
+int execute_store(s_option *opt);
 
 /*
   Checks that options are correctly set and launches the retrieve password function.

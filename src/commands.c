@@ -24,7 +24,7 @@ int execute_create(const s_option *opt)
   }
   else
   {
-    char *password = malloc(sizeof(char) * PASSWORD_MAX_SIZE);
+    char *password = try_secure_alloc(sizeof(char) * PASSWORD_MAX_SIZE);
 
     if (opt->password)
       password = strncpy(password, opt->password, PASSWORD_MAX_SIZE);
@@ -33,7 +33,7 @@ int execute_create(const s_option *opt)
 
     int result = keyring_create(opt->keyring, password);
 
-    free(password);
+    free_password(password);
     return result;
   }
 }
@@ -43,20 +43,20 @@ int execute_list(const s_option *opt)
   return keyrings_list();
 }
 
-int execute_store(const s_option *opt)
+int execute_store(s_option *opt)
 {
   if (!opt->keyring)
   {
     opt->keyring = get_default_keyring();
   }
-  }
+  
   if (!opt->display_name)
   {
     fprintf(stderr, "You must provide a display name for the password\n");
     return 1;
   }
 
-  char *password = malloc(sizeof(char) * PASSWORD_MAX_SIZE);
+  char *password = try_secure_alloc(sizeof(char) * PASSWORD_MAX_SIZE);
 
   if (opt->password)
     password = strncpy(password, opt->password, PASSWORD_MAX_SIZE);
@@ -65,6 +65,6 @@ int execute_store(const s_option *opt)
 
   int result =  password_store(opt->keyring, password, opt->display_name, opt->attributes);
 
-  free(password);
+  free_password(password);
   return result;
 }
