@@ -24,6 +24,6 @@ int execute_store(const s_option *opt);
 /*
   Checks that options are correctly set and launches the retrieve password function.
 */
-int execute_get(const s_option *opt);
+int execute_get(s_option *opt);
 
 #endif

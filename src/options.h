@@ -2,6 +2,7 @@
 #define OPTIONS
 
 #include <gnome-keyring-1/gnome-keyring.h>
+#include <stdlib.h>
 
 /**
   @brief Holds all the informations given by the command line.
@@ -22,5 +23,8 @@ typedef struct cliring_option s_option;
   @param options The option structure to initialize.
 */
 void init_options(s_option* options);
+
+
+void free_options(s_option* options);
 
 #endif

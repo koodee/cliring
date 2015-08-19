@@ -17,9 +17,10 @@ int password_store(const char *keyring, const char *password, const char *displa
 
 int search(const char *keyring, GnomeKeyringAttributeList *attributes)
 {
-  GList *found = malloc(sizeof(GList));
+  GList *found;
 
   GnomeKeyringResult res = gnome_keyring_find_items_sync(GNOME_KEYRING_ITEM_GENERIC_SECRET, attributes, &found);
+  
   if (res != GNOME_KEYRING_RESULT_OK)
   {
     gnome_keyring_found_list_free(found);

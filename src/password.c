@@ -19,7 +19,7 @@ int read_password(char **password)
         return 1;
     }
 
-    printf("Keyring password: ");
+    printf("Password: ");
     fgets(*password, PASSWORD_MAX_SIZE, stdin);
     (*password)[strlen(*password) - 1] = 0;
 

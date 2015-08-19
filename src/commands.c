@@ -1,11 +1,10 @@
 #include "commands.h"
 
-int execute_get(const s_option *opt)
+int execute_get(s_option *opt)
 {
   if (!opt->keyring)
   {
-    fprintf(stderr, "Please provide a keyring.\n");
-    return 1;
+    opt->keyring = get_default_keyring();
   }
   else if (!opt->attributes_count)
   {
@@ -48,9 +47,8 @@ int execute_store(const s_option *opt)
 {
   if (!opt->keyring)
   {
-    //TODO : use default keyring
-    fprintf(stderr, "You must provide a keyring.\n");
-    return 1;
+    opt->keyring = get_default_keyring();
+  }
   }
   if (!opt->display_name)
   {

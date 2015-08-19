@@ -6,21 +6,22 @@ void help()
 {
   fprintf(stderr, "Usage: %s command [OPTIONS]...\n", prg_name);
   fprintf(stderr, "Commands:\n");
-  fprintf(stderr, "\tlist\tDisplay a list of the existing keyrings\n");
-  fprintf(stderr, "\tcreate -k keyring [-p password]\tCreate a new keyring.\n");
-  fprintf(stderr, "\tstore -k keyring -n name [-p password] -a attributes...\tStore a password in a keyring\n");
-  fprintf(stderr, "\tget -k keyring -a key:value...\tRetrieve a password from a keyring that matches the key/value couples.\n");
+  fprintf(stderr, "\tlist                                                     Display a list of the existing keyrings\n");
+  fprintf(stderr, "\tcreate -k keyring [-p password]                          Create a new keyring.\n");
+  fprintf(stderr, "\tstore -k keyring -n name [-p password] -a attributes...  Store a password in a keyring\n");
+  fprintf(stderr, "\tget -k keyring -a key:value...                           Retrieve a password from a keyring that matches the key/value couples.\n");
 
   fprintf(stderr, "\n");
 
   fprintf(stderr, "Options:\n");
   fprintf(stderr, "\t-a --attributes\tA couple used to identify a keyring item. Must be in the form key:value\n");
+  fprintf(stderr, "\t-h --help\tPrint this help.\n");
   fprintf(stderr, "\t-k --keyring\tA keyring name. Represents the new name of the keyring in the create command, identifies the keyring we want to use otherwise.\n");
   fprintf(stderr, "\t-n --name\tThe display name of the keyring item. It can't be used to retrieve the password.\n");
   fprintf(stderr, "\t-p --password\tOnly used when creating a new keyring or item. If not provided, the user will be prompted for the password.\n");
 }
 
-int execute_command(const char *command, const s_option *opt)
+int execute_command(const char *command, s_option *opt)
 {
   if (!strcmp(command, "list"))
   {
@@ -79,6 +80,7 @@ int main(int argc, char* const argv[])
 
   static struct option long_options[] = {
         {"attributes",  required_argument, 0, 'a' },
+        {"help",        no_argument,       0, 'h' },
         {"keyring",     required_argument, 0, 'k' },
         {"name",        required_argument, 0, 'n' },
         {"password",    required_argument, 0, 'p' },
@@ -90,10 +92,19 @@ int main(int argc, char* const argv[])
     {
       case 'a':
         if (get_attribute(optarg, opt))
+        {
           fprintf(stderr, "Malformated attribute: %s\n", optarg);
-          break;
+          free_options(opt);
+          return 1;
+        }
+        break;
+      case 'h':
+        help();
+        free_options(opt);
+        return 0;
+        break;
       case 'k':
-        opt->keyring = optarg;
+        opt->keyring = strdup(optarg);
         break;
       case 'n':
         opt->display_name = optarg;
@@ -103,7 +114,7 @@ int main(int argc, char* const argv[])
         break;
       default:
         help();
-        free(opt);
+        free_options(opt);
         return 1;
     }
 
@@ -122,7 +133,6 @@ int main(int argc, char* const argv[])
     else
       result = execute_command(argv[optind], opt);
 
-    gnome_keyring_attribute_list_free(opt->attributes);
-    free(opt);
+    free_options(opt);
     return result;
 }
