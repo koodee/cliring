@@ -1,5 +1,22 @@
 #include "commands.h"
 
+int execute_unlock(s_option *opt)
+{
+  if (!opt->keyring)
+  {
+    opt->keyring = get_default_keyring();
+  }
+
+  char *password = try_secure_alloc(sizeof(char) * PASSWORD_MAX_SIZE);
+
+  if (opt->password)
+    password = strncpy(password, opt->password, PASSWORD_MAX_SIZE);
+  else
+    read_password(&password);
+
+    return keyring_unlock(opt->keyring, password);
+}
+
 int execute_lock(s_option *opt)
 {
   if (!opt->keyring)

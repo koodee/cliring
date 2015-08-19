@@ -1,5 +1,12 @@
 #include "keyring.h"
 
+int keyring_unlock(char *keyring, char *password)
+{
+  GnomeKeyringResult res = gnome_keyring_unlock_sync(keyring, password);
+
+  return keyring_handle_error(res);
+}
+
 int keyring_lock(char *keyring)
 {
     GnomeKeyringResult res = gnome_keyring_lock_sync(keyring);

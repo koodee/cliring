@@ -18,6 +18,8 @@ int keyring_lock(char *keyring);
 
 char *get_default_keyring();
 
+int keyring_unlock(char *keyring, char *password);
+
 
 
 #endif
