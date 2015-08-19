@@ -14,4 +14,10 @@ int keyring_create(char *keyring, char *password);
 */
 int keyrings_list();
 
+int keyring_lock(char *keyring);
+
+char *get_default_keyring();
+
+
+
 #endif

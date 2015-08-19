@@ -1,5 +1,15 @@
 #include "commands.h"
 
+int execute_lock(s_option *opt)
+{
+  if (!opt->keyring)
+  {
+    opt->keyring = get_default_keyring();
+  }
+
+  return keyring_lock(opt->keyring);
+}
+
 int execute_get(s_option *opt)
 {
   if (!opt->keyring)
@@ -49,7 +59,7 @@ int execute_store(s_option *opt)
   {
     opt->keyring = get_default_keyring();
   }
-  
+
   if (!opt->display_name)
   {
     fprintf(stderr, "You must provide a display name for the password\n");

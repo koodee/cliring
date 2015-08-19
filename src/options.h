@@ -3,6 +3,7 @@
 
 #include <gnome-keyring-1/gnome-keyring.h>
 #include <stdlib.h>
+#include "password.h"
 
 /**
   @brief Holds all the informations given by the command line.

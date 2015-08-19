@@ -6,10 +6,11 @@ void help()
 {
   fprintf(stderr, "Usage: %s command [OPTIONS]...\n", prg_name);
   fprintf(stderr, "Commands:\n");
-  fprintf(stderr, "\tlist                                                     Display a list of the existing keyrings\n");
-  fprintf(stderr, "\tcreate -k keyring [-p password]                          Create a new keyring.\n");
-  fprintf(stderr, "\tstore -k keyring -n name [-p password] -a attributes...  Store a password in a keyring\n");
-  fprintf(stderr, "\tget -k keyring -a key:value...                           Retrieve a password from a keyring that matches the key/value couples.\n");
+  fprintf(stderr, "\tlist                                                       Display a list of the existing keyrings\n");
+  fprintf(stderr, "\tcreate -k keyring [-p password]                            Create a new keyring.\n");
+  fprintf(stderr, "\tstore [-k keyring] -n name [-p password] -a attributes...  Store a password in a keyring\n");
+  fprintf(stderr, "\tget [-k keyring[ -a key:value...                           Retrieve a password from a keyring that matches the key/value couples.\n");
+  fprintf(stderr, "\tlock [-k keyring]                                          Lock a keyring. If no kering is provided, default keyring is used\n");
 
   fprintf(stderr, "\n");
 
@@ -38,6 +39,10 @@ int execute_command(const char *command, s_option *opt)
   else if (!strcmp(command, "get"))
   {
     return execute_get(opt);
+  }
+  else if (!strcmp(command, "lock"))
+  {
+    return execute_lock(opt);
   }
   else
   {

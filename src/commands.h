@@ -26,4 +26,7 @@ int execute_store(s_option *opt);
 */
 int execute_get(s_option *opt);
 
+int execute_lock(s_option *opt);
+
+
 #endif
