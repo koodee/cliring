@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include "tools.h"
+#include "password.h"
 
 /*
   Creates a new keyring from a name and a password.
@@ -18,8 +19,6 @@ int keyring_lock(char *keyring);
 
 char *get_default_keyring();
 
-int keyring_unlock(char *keyring, char *password);
-
-
+int keyring_unlock(char *keyring);
 
 #endif

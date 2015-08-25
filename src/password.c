@@ -4,7 +4,7 @@ const int PASSWORD_MAX_SIZE = 64;
 
 
 // Code from http://stackoverflow.com/questions/1196418/getting-a-password-in-c-without-using-getpass-3
-int read_password(char **password)
+int read_password(char **password, char *text)
 {
   struct termios oflags, nflags;
 
@@ -19,7 +19,7 @@ int read_password(char **password)
         return 1;
     }
 
-    printf("Password: ");
+    printf("%s: ", text);
     fgets(*password, PASSWORD_MAX_SIZE, stdin);
     (*password)[strlen(*password) - 1] = 0;
 

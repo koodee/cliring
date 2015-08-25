@@ -6,12 +6,12 @@ void help()
 {
   fprintf(stderr, "Usage: %s command [OPTIONS]...\n", prg_name);
   fprintf(stderr, "Commands:\n");
-  fprintf(stderr, "\tlist                                                       Display a list of the existing keyrings\n");
-  fprintf(stderr, "\tcreate -k keyring [-p password]                            Create a new keyring.\n");
-  fprintf(stderr, "\tstore [-k keyring] -n name [-p password] -a attributes...  Store a password in a keyring\n");
-  fprintf(stderr, "\tget [-k keyring[ -a key:value...                           Retrieve a password from a keyring that matches the key/value couples.\n");
-  fprintf(stderr, "\tlock [-k keyring]                                          Lock a keyring. If no kering is provided, default keyring is locked\n");
-  fprintf(stderr, "\tunlock [-k keyring]                                        Unlock a keyring. If no keyring is provided, the default keyring unlocked\n");
+  fprintf(stderr, "\tlist                                         Display a list of the existing keyrings\n");
+  fprintf(stderr, "\tcreate -k keyring                            Create a new keyring.\n");
+  fprintf(stderr, "\tstore [-k keyring] -n name -a attributes...  Store a password in a keyring\n");
+  fprintf(stderr, "\tget [-k keyring[ -a key:value...             Retrieve a password from a keyring that matches the key/value couples.\n");
+  fprintf(stderr, "\tlock [-k keyring]                            Lock a keyring. If no kering is provided, default keyring is locked\n");
+  fprintf(stderr, "\tunlock [-k keyring]                          Unlock a keyring. If no keyring is provided, the default keyring unlocked\n");
 
   fprintf(stderr, "\n");
 
@@ -20,7 +20,6 @@ void help()
   fprintf(stderr, "\t-h --help\tPrint this help.\n");
   fprintf(stderr, "\t-k --keyring\tA keyring name. Represents the new name of the keyring in the create command, identifies the keyring we want to use otherwise.\n");
   fprintf(stderr, "\t-n --name\tThe display name of the keyring item. It can't be used to retrieve the password.\n");
-  fprintf(stderr, "\t-p --password\tOnly used when creating a new keyring or item. If not provided, the user will be prompted for the password.\n");
 }
 
 int execute_command(const char *command, s_option *opt)
@@ -93,11 +92,10 @@ int main(int argc, char* const argv[])
         {"help",        no_argument,       0, 'h' },
         {"keyring",     required_argument, 0, 'k' },
         {"name",        required_argument, 0, 'n' },
-        {"password",    required_argument, 0, 'p' },
         {0,             0,                 0,  0  }
     };
 
-  while ((c = getopt_long(argc, argv, "a:k:n:p:", long_options, NULL)) != -1)
+  while ((c = getopt_long(argc, argv, "a:k:n:h", long_options, NULL)) != -1)
     switch (c)
     {
       case 'a':
@@ -118,9 +116,6 @@ int main(int argc, char* const argv[])
         break;
       case 'n':
         opt->display_name = optarg;
-        break;
-      case 'p':
-        opt->password = try_secure_dup(optarg);
         break;
       default:
         help();

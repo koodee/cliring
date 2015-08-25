@@ -7,14 +7,7 @@ int execute_unlock(s_option *opt)
     opt->keyring = get_default_keyring();
   }
 
-  char *password = try_secure_alloc(sizeof(char) * PASSWORD_MAX_SIZE);
-
-  if (opt->password)
-    password = strncpy(password, opt->password, PASSWORD_MAX_SIZE);
-  else
-    read_password(&password);
-
-    return keyring_unlock(opt->keyring, password);
+  return keyring_unlock(opt->keyring);
 }
 
 int execute_lock(s_option *opt)
@@ -39,7 +32,12 @@ int execute_get(s_option *opt)
     return 1;
   }
 
-  return search(opt->keyring, opt->attributes);
+  GnomeKeyringResult res = keyring_unlock(opt->keyring);
+
+  if (res == GNOME_KEYRING_RESULT_OK)
+    return search(opt->keyring, opt->attributes);
+  else
+    return res;
 }
 
 int execute_create(const s_option *opt)
@@ -53,10 +51,7 @@ int execute_create(const s_option *opt)
   {
     char *password = try_secure_alloc(sizeof(char) * PASSWORD_MAX_SIZE);
 
-    if (opt->password)
-      password = strncpy(password, opt->password, PASSWORD_MAX_SIZE);
-    else
-      read_password(&password);
+    read_password(&password, "Enter the new keyring password");
 
     int result = keyring_create(opt->keyring, password);
 
@@ -83,14 +78,16 @@ int execute_store(s_option *opt)
     return 1;
   }
 
+  GnomeKeyringResult res = keyring_unlock(opt->keyring);
+
+  if (res != GNOME_KEYRING_RESULT_OK)
+    return res;
+
   char *password = try_secure_alloc(sizeof(char) * PASSWORD_MAX_SIZE);
 
-  if (opt->password)
-    password = strncpy(password, opt->password, PASSWORD_MAX_SIZE);
-  else
-    read_password(&password);
+  read_password(&password, "Enter the password you want to store");
 
-  int result =  password_store(opt->keyring, password, opt->display_name, opt->attributes);
+  int result = password_store(opt->keyring, password, opt->display_name, opt->attributes);
 
   free_password(password);
   return result;

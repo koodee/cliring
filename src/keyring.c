@@ -1,10 +1,31 @@
 #include "keyring.h"
 
-int keyring_unlock(char *keyring, char *password)
+int keyring_unlock(char *keyring)
 {
-  GnomeKeyringResult res = gnome_keyring_unlock_sync(keyring, password);
+  GnomeKeyringInfo *info = NULL;
+  char *password;
 
-  return keyring_handle_error(res);
+  gnome_keyring_get_info_sync(keyring, &info);
+
+  if (gnome_keyring_info_get_is_locked(info))
+  {
+    password = try_secure_alloc(sizeof(char) * PASSWORD_MAX_SIZE);
+
+    read_password(&password, "Enter the keyring password");
+    GnomeKeyringResult res = gnome_keyring_unlock_sync(keyring, password);
+
+    free_password(password);
+
+    if (res != GNOME_KEYRING_RESULT_OK)
+    {
+      gnome_keyring_info_free(info);
+      return keyring_handle_error(res);
+    }
+  }
+
+  gnome_keyring_info_free(info);
+
+  return GNOME_KEYRING_RESULT_OK;
 }
 
 int keyring_lock(char *keyring)

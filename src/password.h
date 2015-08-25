@@ -13,9 +13,10 @@ extern const int PASSWORD_MAX_SIZE;
   @brief Read a password from stdin
 
   @param password A pointer to a string that will hold the password.
+  @param text The text to prompt.
   @return 1 if an error occured, 0 otherwise.
 */
-int read_password(char** password);
+int read_password(char **password, char *text);
 
 /**
   @brief Duplicates a string to non paged memory if possible.
