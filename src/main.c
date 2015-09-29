@@ -10,7 +10,7 @@ void help()
   fprintf(stderr, "\tcreate -k keyring                            Create a new keyring.\n");
   fprintf(stderr, "\tstore [-k keyring] -n name -a attributes...  Store a password in a keyring\n");
   fprintf(stderr, "\tget [-k keyring[ -a key:value...             Retrieve a password from a keyring that matches the key/value couples.\n");
-  fprintf(stderr, "\tlock [-k keyring]                            Lock a keyring. If no kering is provided, default keyring is locked\n");
+  fprintf(stderr, "\tlock [-k keyring]                            Lock a keyring. If no keyring is provided, default keyring is locked\n");
   fprintf(stderr, "\tunlock [-k keyring]                          Unlock a keyring. If no keyring is provided, the default keyring unlocked\n");
 
   fprintf(stderr, "\n");
