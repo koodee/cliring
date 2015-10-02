@@ -12,3 +12,6 @@ all: $(OBJ)
 
 clean:
 	rm -f *.o $(OUT)
+
+test: all
+	@./test.sh
