@@ -5,6 +5,7 @@ int execute_delete(s_option *opt)
   if (!opt->keyring)
   {
     fprintf(stderr, "Please provide the keyring you want to delete.\n");
+    return 1;
   }
 
   return keyring_delete(opt->keyring);
