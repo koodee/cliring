@@ -8,8 +8,9 @@ void help()
   fprintf(stderr, "Commands:\n");
   fprintf(stderr, "\tlist                                         Display a list of the existing keyrings\n");
   fprintf(stderr, "\tcreate -k keyring                            Create a new keyring.\n");
+  fprintf(stderr, "\tdelete -k keyring                            Delete a keyring\n");
   fprintf(stderr, "\tstore [-k keyring] -n name -a attributes...  Store a password in a keyring\n");
-  fprintf(stderr, "\tget [-k keyring[ -a key:value...             Retrieve a password from a keyring that matches the key/value couples.\n");
+  fprintf(stderr, "\tget [-k keyring] -a key:value...             Retrieve a password from a keyring that matches the key/value couples.\n");
   fprintf(stderr, "\tlock [-k keyring]                            Lock a keyring. If no keyring is provided, default keyring is locked\n");
   fprintf(stderr, "\tunlock [-k keyring]                          Unlock a keyring. If no keyring is provided, the default keyring unlocked\n");
 
@@ -31,6 +32,10 @@ int execute_command(const char *command, s_option *opt)
   else if (!strcmp(command, "create"))
   {
     return execute_create(opt);
+  }
+  else if (!strcmp(command, "delete"))
+  {
+    return execute_delete(opt);
   }
   else if (!strcmp(command, "store"))
   {

@@ -21,4 +21,6 @@ char *get_default_keyring();
 
 int keyring_unlock(char *keyring);
 
+int keyring_delete(char *keyring);
+
 #endif

@@ -1,5 +1,12 @@
 #include "keyring.h"
 
+int keyring_delete(char *keyring)
+{
+  GnomeKeyringResult res = gnome_keyring_delete_sync(keyring);
+
+  return keyring_handle_error(res);
+}
+
 int keyring_unlock(char *keyring)
 {
   GnomeKeyringInfo *info = NULL;

@@ -1,5 +1,15 @@
 #include "commands.h"
 
+int execute_delete(s_option *opt)
+{
+  if (!opt->keyring)
+  {
+    fprintf(stderr, "Please provide the keyring you want to delete.\n");
+  }
+
+  return keyring_delete(opt->keyring);
+}
+
 int execute_unlock(s_option *opt)
 {
   if (!opt->keyring)

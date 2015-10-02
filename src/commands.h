@@ -30,4 +30,6 @@ int execute_lock(s_option *opt);
 
 int execute_unlock(s_option *opt);
 
+int execute_delete(s_option *opt);
+
 #endif
