@@ -3,6 +3,7 @@
 KEYRING="keyring-test"
 KEYRING_PWD="keyring_pwd"
 SECRET="secret"
+SECRET2="secret2"
 CLIRING="./cliring"
 ATTRIBUTE1="app:test"
 ATTRIBUTE2="user:m026839"
@@ -22,15 +23,13 @@ function incSuccess()
 
 function on_success()
 {
-  echo -n "$1 "
-  echo -e "\e[32mOK\e[39m"
+  printf "%-40s \e[32mOK\e[39m\n" "$1"
   incSuccess
 }
 
 function on_failure()
 {
-  echo -n "$1 "
-  echo -e "\e[31mKO\e[39m"
+  printf "%-40s \e[31mKO\e[39m\n" "$1"
 }
 
 #######################
@@ -143,7 +142,7 @@ function test_store_get_password()
 {
     # Storing a password
   incTotal
-  expect << EOF
+  expect << EOF > /dev/null
   set timeout 1
   spawn $CLIRING store -k $KEYRING -n secret -a $ATTRIBUTE1 -a $ATTRIBUTE2
   expect {
@@ -175,12 +174,33 @@ EOF
   if [ $? -ne 0 ]; then
     on_failure "Password recovery"
   else
+    # We do the actual pasword recovery
     RESULT=$($CLIRING get -k $KEYRING -a $ATTRIBUTE1 -a $ATTRIBUTE2)
     if [ "$RESULT" = "$SECRET" ]; then
       on_success "Password recovery"
     else
       on_failure "Password recovery"
     fi
+  fi
+
+  # testing password override
+  incTotal
+
+  # Password override
+  expect << EOF > /dev/null
+  set timeout 1
+  spawn $CLIRING store -k $KEYRING -n secret -a $ATTRIBUTE1 -a $ATTRIBUTE2
+  expect {
+    timeout {exit 1}
+    "Enter the password you want to store:" {send -- "$SECRET2\r"}
+  }
+  expect eof
+EOF
+  RESULT=$($CLIRING get -k $KEYRING -a $ATTRIBUTE1 -a $ATTRIBUTE2)
+  if [ "$RESULT" = "$SECRET2" ]; then
+    on_success "Password override"
+  else
+    on_failure "Password override"
   fi
 }
 
