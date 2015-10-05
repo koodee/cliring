@@ -89,6 +89,8 @@ int main(int argc, char* const argv[])
   int result = 0;
   prg_name = argv[0];
 
+  g_set_application_name(prg_name);
+
   s_option *opt = malloc(sizeof(s_option));
   init_options(opt);
 
