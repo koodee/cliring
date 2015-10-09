@@ -13,5 +13,8 @@ all: $(OBJ)
 clean:
 	rm -f *.o $(OUT)
 
+install:
+	mv $(OUT) /usr/local/bin/
+
 test: all
 	@./test.sh
